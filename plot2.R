@@ -1,0 +1,11 @@
+library(datasets)
+powerDF = read.table("household_power_consumption.txt", skip=66637, nrows=2880, sep=";")
+featureLabelsVector = c("Date","Time","Global_active_power","Global_reactive_power","Voltage","Global_intensity","Sub_metering_1","Sub_metering_2","Sub_metering_3")
+colnames(powerDF) = featureLabelsVector
+powerDF_plot2 = tbl_df(powerDF)
+powerDF_plot2$Time = as.character(powerDF_plot2$Time)
+powerDF_plot2$Date = as.character(powerDF_plot2$Date)
+powerDF_plot2$DateTime <- as.POSIXct(paste( powerDF_plot2$Date,  powerDF_plot2$Time), format="%d/%m/%Y %H:%M:%S")
+with(powerDF_plot2, plot(DateTime, Global_active_power, xlab = "", ylab="Global Active Power (kilowatts)", type="l"))
+dev.copy(png, file = "plot2.png")
+dev.off()
